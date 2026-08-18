@@ -1,0 +1,22 @@
+# Use a lightweight Node base image
+FROM node:18-alpine
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy only package files first (for better build caching)
+COPY package*.json ./
+
+RUN npm install
+
+# Install nodemon globally
+RUN npm install -g nodemon
+
+# Copy your application code
+COPY . .
+
+# Expose your Node app port
+EXPOSE 3000
+
+# Node application start
+CMD ["node", "app.js"]
